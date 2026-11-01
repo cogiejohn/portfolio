@@ -1,0 +1,217 @@
+*{
+    box-sizing: border-box;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+@font-face {
+  font-family: 'Helvetica';
+  src: url('fonts/Helvetica.ttf') format('truetype');
+  font-display: swap; /* Prevents invisible text while loading */
+}
+@font-face {
+    font-family: 'Garamond';
+    src: url('fonts/EBGaramond-Regular.ttf') format('truetype');
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Aston';
+    src: url('fonts/Aston.ttf') format('truetype');
+    font-display: swap;
+}
+
+
+#me {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    padding: 10vh;
+    height: 80vh;
+}
+#me-img {
+    width: calc(60vh * 0.75);
+    height: 60vh;
+    overflow: hidden;
+    margin: 10px;
+    border-radius: 5%;
+}
+#me-img img {
+    width: 100%;
+    height: 100%;
+    /* Ensures the asset scales down if large, but won't stretch if small */
+    object-fit: cover; 
+    /* (Optional) Keeps the asset centered in the blank space */
+    object-position: center;
+}
+#me-text {
+    width: calc(60vh * 1.5);
+    text-align: left;
+    height: 60vh;
+    overflow: hidden;
+    margin: 10px;
+    padding: 10px;
+    padding-left: 3vw;
+    padding-right: 2vw;
+}
+#me-text h1 {
+    font-size: 7.5vh;
+    font-family: 'Helvetica', sans-serif;
+    margin: 10px 0px 0px 0px;
+}
+#me-text p {
+    font-size: 2.4vh;
+    font-family: 'Garamond', serif;
+    margin: 10px 0px 10px 0px;
+    padding-left: 1vw;
+}
+#me-text h2 {
+    font-size: 2.5vh;
+    font-family: 'Garamond', serif;
+    margin: 0px 0px 1px 0px;
+    padding-left: 1vw;
+}
+#me-text a {
+    color: #000000 !important;
+}
+
+/* Welcome Section */
+#welcome {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    padding: 0 10vh 2vh 10vh;
+    height: 15vh;
+    font-size: 2.5vh;
+    font-family: 'Aston', sans-serif;
+}
+
+/* featured section */
+.openers {
+    text-align: center;
+    font-size: 3.5vh;
+    margin: 2vh 0 3vh 0;
+    font-family: 'Helvetica', sans-serif;
+}
+#feature {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    text-align: left;
+    padding: 0vh 10vh calc(10vh - 20px) 10vh;
+    height: 88vh;
+}
+#ftmain {
+    width: 90vh;
+    height: 80vh;
+    overflow: hidden;
+    margin: 10px;
+    padding: 1.5vh;
+    border-radius: 5px;
+    padding: 1.5vh;
+}
+#ftside {
+    width: 35vh;
+    height: 80vh;
+    overflow: hidden;
+    margin: 10px;
+    padding: 1.5vh;
+    border-radius: 5px;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+}
+.ftbr h2 {
+    font-size: 3.5vh;
+    font-family: 'Helvetica', sans-serif;
+    margin: 0px 0px 1vh 0px;
+    padding: 0 2vh 0 2vh;
+}
+.ftbr h3 {
+    font-size: 2.2vh;
+    font-family: 'Helvetica', sans-serif;
+    margin: 0px 0px 1vh 0px;
+    padding: 0 1vh 0 1vh;
+}
+.ftbr p {
+    font-size: 2.5vh;
+    font-family: 'Garamond', serif;
+    margin: 2vh 0px 1vh 0px;
+    padding: 0 0vh 0 4vh;
+}
+#ftmain .date {
+    font-size: 2vh;
+    font-family: 'Helvetica', serif;
+    font-style: italic;
+    padding: 0 2vh 0 2vh;
+}
+#ftside .date {
+    font-size: 1.5vh;
+    font-family: 'Helvetica', serif;
+    font-style: italic;
+    padding: 0 1vh 0 1vh;
+}
+#ftside1-img, #ftside2-img {
+    width: 32vh;
+    height: calc(32vh * .75);
+    overflow: hidden;
+    border-radius: 5px;
+    background-color: black;
+    margin-bottom: 1vh;
+}
+#ftmain-img {
+    width: 87vh;
+    height: calc(87vh * (9/16));
+    overflow: hidden;
+    border-radius: 5px;
+    background-color: black;
+    margin-bottom: 2vh;
+}
+#ftmain-img img, #ftside1-img img, #ftside2-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+#works {
+    display: grid;
+    grid-template-columns: repeat(3, 35vh);
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    padding: 2vh 0 4vh 0;
+}
+
+.worksworks {
+    width: 35vh;
+    height: 40vh;
+    overflow: hidden;
+    margin: 0;
+    padding: 1.5vh;
+    border-radius: 5px;
+}
+.works-image {
+    display: block;
+    width: 100%;
+    height: 22vh;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 5px;
+}
+.works-title {
+    font-size: 2.2vh;
+    font-family: 'Helvetica', sans-serif;
+    margin: 1vh 0;
+}
+.works-date {
+    font-size: 1.5vh;
+    font-family: 'Helvetica', serif;
+    font-style: italic;
+    margin: 0;
+}
+[data-article-url] {
+    cursor: pointer;
+}
+.shadow-dreamy {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}

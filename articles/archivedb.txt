@@ -1,0 +1,5 @@
+id|img|header|title|date|type|publishedwhere|outlink
+00001|00001.png|Opinion|‘Pinggang Pinoy’: When a proper meal becomes a dream|August 10, 2026|Published|inquirer.NET|https://opinion.inquirer.net/193679/pinggang-pinoy-when-a-proper-meal-becomes-a-dream
+00002|00002.png|Opinion|You cannot eat money: Prioritizing agriculture and fisheries|September 24, 2026|Published|inquirer.NET|https://opinion.inquirer.net/194632/you-cannot-eat-money-prioritizing-agriculture-and-fisheries
+00003|00003.png|Opinion|Are we just going to watch our farm fields drown?|September 8, 2026|Published|inquirer.NET|https://opinion.inquirer.net/194283/are-we-just-going-to-watch-our-farm-fields-drown
+00004|00001.png|Art|Test lang is kale|November 1, 2026|Self|NA|NA
