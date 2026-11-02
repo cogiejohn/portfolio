@@ -91,7 +91,7 @@
     justify-content: center;
     text-align: center;
     align-items: center;
-    padding: 0 var(--article-inset) 0 var(--article-inset);
+    padding: 2vh var(--article-inset) 0 var(--article-inset);
     font-family: 'Aston', sans-serif;
 }
 #back2archive h1 {
