@@ -104,6 +104,6 @@
     }
 }
 #welcome a {
-    color: inherit;
-    text-decoration: none;
+    color: black !important;
+    text-decoration: none !important;
 }
