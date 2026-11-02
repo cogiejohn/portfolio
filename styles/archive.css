@@ -1,3 +1,7 @@
+:root {
+    --article-inset: clamp(16px, 10vw, 10vh);
+}
+
 *{
     box-sizing: border-box;
     user-select: none;
@@ -22,19 +26,19 @@
 
 #me {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     text-align: center;
     align-items: center;
-    padding: 10vh;
-    height: 80vh;
+    padding: 5vh var(--article-inset) 2vh;
+    height: auto;
 }
 #me-img {
-    width: calc(60vh * 0.75);
-    height: 60vh;
+    width: 30vh;
+    height: 30vh;
     overflow: hidden;
     margin: 10px;
-    border-radius: 5%;
+    border-radius: 50%;
 }
 #me-img img {
     width: 100%;
@@ -45,28 +49,29 @@
     object-position: center;
 }
 #me-text {
-    width: calc(60vh * 1.5);
+    container-type: inline-size;
+    width: 100%;
     text-align: left;
-    height: 60vh;
-    overflow: hidden;
+    height: auto;
+    overflow: visible;
     margin: 10px;
     padding: 10px;
     padding-left: 3vw;
     padding-right: 2vw;
 }
 #me-text h1 {
-    font-size: 7.5vh;
+    font-size: clamp(2rem, 8cqi, 5rem);
     font-family: 'Helvetica', sans-serif;
     margin: 10px 0px 0px 0px;
 }
 #me-text p {
-    font-size: 2.4vh;
+    font-size: clamp(1rem, calc(0.9rem + 0.6cqi), 1.5rem);
     font-family: 'Garamond', serif;
     margin: 10px 0px 10px 0px;
     padding-left: 1vw;
 }
 #me-text h2 {
-    font-size: 2.5vh;
+    font-size: clamp(1rem, calc(0.9rem + 0.5cqi), 1.5rem);
     font-family: 'Garamond', serif;
     margin: 0px 0px 1px 0px;
     padding-left: 1vw;
@@ -77,42 +82,48 @@
 
 /* Welcome Section */
 #welcome {
+    container-type: inline-size;
     display: flex;
     justify-content: center;
     text-align: center;
     align-items: center;
-    padding: 0 10vh 2vh 10vh;
-    height: 15vh;
-    font-size: 2.5vh;
+    padding: 0 var(--article-inset) 2vh;
+    min-height: 15vh;
+    font-size: clamp(1rem, 2.5vh, 1.5rem);
     font-family: 'Aston', sans-serif;
+}
+#welcome h1 {
+    font-size: min(6cqi, 3rem);
+    white-space: nowrap;
 }
 
 /* featured section */
 .openers {
     text-align: center;
-    font-size: 3.5vh;
+    font-size: clamp(1.5rem, 3.5vh, 2.5rem);
     margin: 2vh 0 3vh 0;
     font-family: 'Helvetica', sans-serif;
 }
 #feature {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     text-align: left;
-    padding: 0vh 10vh calc(10vh - 20px) 10vh;
-    height: 88vh;
+    padding: 0vh 2vh calc(10vh - 20px);
+    height: auto;
 }
 #ftmain {
-    width: 90vh;
-    height: 80vh;
-    overflow: hidden;
+    flex: 0 0 auto;
+    min-width: 0;
+    height: auto;
+    overflow: visible;
     margin: 10px;
     padding: 1.5vh;
     border-radius: 5px;
-    padding: 1.5vh;
 }
 #ftside {
-    width: 35vh;
+    flex: 0 0 80vh;
+    min-width: 0;
     height: 80vh;
     overflow: hidden;
     margin: 10px;
@@ -122,37 +133,37 @@
     grid-template-rows: 1fr 1fr;
 }
 .ftbr h2 {
-    font-size: 3.5vh;
+    font-size: clamp(1.5rem, 3.5vh, 2.5rem);
     font-family: 'Helvetica', sans-serif;
     margin: 0px 0px 1vh 0px;
     padding: 0 2vh 0 2vh;
 }
 .ftbr h3 {
-    font-size: 2.2vh;
+    font-size: clamp(1rem, 2.2vh, 1.5rem);
     font-family: 'Helvetica', sans-serif;
     margin: 0px 0px 1vh 0px;
     padding: 0 1vh 0 1vh;
 }
 .ftbr p {
-    font-size: 2.5vh;
+    font-size: clamp(1rem, calc(0.9rem + 0.5vw), 1.5rem);
     font-family: 'Garamond', serif;
     margin: 2vh 0px 1vh 0px;
-    padding: 0 0vh 0 4vh;
+    padding: 0 2vh 0 4vh;
 }
 #ftmain .date {
-    font-size: 2vh;
+    font-size: clamp(0.875rem, 2vh, 1.25rem);
     font-family: 'Helvetica', serif;
     font-style: italic;
     padding: 0 2vh 0 2vh;
 }
 #ftside .date {
-    font-size: 1.5vh;
+    font-size: clamp(0.75rem, 1.5vh, 1rem);
     font-family: 'Helvetica', serif;
     font-style: italic;
     padding: 0 1vh 0 1vh;
 }
 #ftside1-img, #ftside2-img {
-    width: 32vh;
+    width: 100%;
     height: calc(32vh * .75);
     overflow: hidden;
     border-radius: 5px;
@@ -160,8 +171,8 @@
     margin-bottom: 1vh;
 }
 #ftmain-img {
-    width: 87vh;
-    height: calc(87vh * (9/16));
+    width: 100%;
+    height: auto;
     overflow: hidden;
     border-radius: 5px;
     background-color: black;
@@ -173,22 +184,102 @@
     object-fit: cover;
     object-position: center;
 }
+#ftmain-img img {
+    display: block;
+    height: auto;
+}
 #works {
     display: grid;
-    grid-template-columns: repeat(3, 35vh);
+    grid-template-columns: minmax(0, min(35vh, 100%));
     justify-content: center;
     gap: 20px;
     width: 100%;
-    padding: 2vh 0 4vh 0;
+    max-width: calc(145vh + 40px);
+    margin: 0 auto;
+    padding: 2vh 2vh 4vh;
+}
+
+@media (min-width: calc(90vh + 20px)) {
+    #feature {
+        padding-right: 10vh;
+        padding-left: 10vh;
+    }
+
+    #works {
+        grid-template-columns: repeat(2, minmax(0, 35vh));
+        padding-right: 10vh;
+        padding-left: 10vh;
+    }
+    .ftbr p {
+        font-size: clamp(1rem, 2.5vh, 1.5rem);
+    }
+}
+
+@media (min-width: calc(145vh + 40px)) {
+    #me {
+        flex-direction: row;
+        height: 80vh;
+        padding-top: 10vh;
+        padding-bottom: 10vh;
+    }
+
+    #me-img {
+        width: calc(60vh * 0.75);
+        height: 60vh;
+        border-radius: 5%;
+    }
+
+    #me-text {
+        width: calc(60vh * 1.5);
+        height: 60vh;
+        overflow: hidden;
+    }
+
+    #works {
+        grid-template-columns: repeat(3, minmax(0, 35vh));
+        padding-right: 20vh;
+        padding-left: 20vh;
+    }
+
+    #feature {
+        flex-direction: row;
+        align-items: flex-start;
+        padding-right: 20vh;
+        padding-left: 20vh;
+        height: auto;
+    }
+
+    #ftmain {
+        flex: 18 1 0;
+        height: 80vh;
+        overflow: hidden;
+    }
+
+    #ftmain-img {
+        height: calc(87vh * (9/16));
+    }
+
+    #ftmain-img img {
+        height: 100%;
+    }
+
+    #ftside {
+        flex: 7 1 0;
+    }
 }
 
 .worksworks {
-    width: 35vh;
-    height: 40vh;
+    width: 100%;
+    height: auto;
     overflow: hidden;
     margin: 0;
     padding: 1.5vh;
     border-radius: 5px;
+}
+@media (min-width: calc(90vh + 20px)) {
+    .worksworks {
+        height: 40vh;
+    }
 }
 .works-image {
     display: block;
@@ -199,12 +290,12 @@
     border-radius: 5px;
 }
 .works-title {
-    font-size: 2.2vh;
+    font-size: clamp(1rem, 2.2vh, 1.5rem);
     font-family: 'Helvetica', sans-serif;
     margin: 1vh 0;
 }
 .works-date {
-    font-size: 1.5vh;
+    font-size: clamp(0.75rem, 1.5vh, 1rem);
     font-family: 'Helvetica', serif;
     font-style: italic;
     margin: 0;

@@ -3,7 +3,7 @@
 }
 
 #article-header {
-    padding: 5vh var(--article-inset) 0 var(--article-inset);
+    padding: 1vh var(--article-inset) 0 var(--article-inset);
     font-family: 'garamond', serif;
     font-size: 3vh;
     margin: 0px 0px 0 0px;
@@ -31,13 +31,34 @@
     object-fit: cover;
     object-position: center;
     border-radius: 5px;
+    margin: 0px 0px 10px 0px;
+}
+@media (max-width: 600px) {
+    #article-image img {
+        aspect-ratio: 4 / 3;
+    }
 }
 #image-caption {
-    padding: 0px calc(var(--article-inset) + 10px) 0 var(--article-inset);
+    box-sizing: border-box;
+    width: fit-content;
+    max-width: 75%;
+    margin: 0 var(--article-inset) 0 auto;
+    padding-right: 10px;
     font-family: 'helvetica', sans-serif;
-    font-size: 2vh;
+    font-size: clamp(0.55rem, 2.8vw, 0.9rem);
     font-style: italic;
     text-align: right;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+#image-caption .image-caption-attribution {
+    display: block;
+}
+@media (max-width: 600px) {
+    #image-caption {
+        font-size: 0.65rem;
+    }
+    
 }
 #article-content {
     padding: 2vh var(--article-inset) 10vh var(--article-inset);
@@ -47,10 +68,11 @@
 }
 
 #article-outlink {
+    box-sizing: border-box;
     display: block;
-    width: fit-content;
+    width: clamp(30%, calc(600px - 30vw), 70%);
     margin: 2vh auto;
-    padding: 0.75rem 4rem;
+    padding: 0.75rem 4vw;
     background-color: #000;
     color: #fff;
     border-radius: 4px;
@@ -58,6 +80,30 @@
     text-decoration: none;
     font-size: 2.5vh;
     font-weight: bold;
+    text-align: center;
+    white-space: nowrap;
 }
 
-
+/* Welcome Section */
+#welcome {
+    container-type: inline-size;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    padding: 0 var(--article-inset) 0 var(--article-inset);
+    font-family: 'Aston', sans-serif;
+}
+#welcome h1 {
+    font-size: min(3cqi, 3rem);
+    white-space: nowrap;
+}
+@media (max-width: 700px) {
+    #welcome h1 {
+        font-size: 6cqi;
+    }
+}
+#welcome a {
+    color: inherit;
+    text-decoration: none;
+}

@@ -187,7 +187,23 @@ async function displayArticle(record) {
     const imageCaption = templateDocument.querySelector("#image-caption");
     const caption = parseImageCaptions(captionsText).get(record.image);
     if (imageCaption && caption) {
-        imageCaption.textContent = caption;
+        const markedLine = caption.match(/<([^<>]+)>/);
+        if (markedLine && markedLine.index !== undefined) {
+            const beforeMarker = caption.slice(0, markedLine.index).trim();
+            const afterMarker = caption.slice(markedLine.index + markedLine[0].length).trim();
+            const attribution = templateDocument.createElement("span");
+            attribution.className = "image-caption-attribution";
+            attribution.style.setProperty("display", "block", "important");
+            attribution.textContent = markedLine[1].trim();
+
+            imageCaption.replaceChildren(
+                templateDocument.createTextNode(beforeMarker),
+                attribution,
+                ...(afterMarker ? [templateDocument.createTextNode(` ${afterMarker}`)] : [])
+            );
+        } else {
+            imageCaption.textContent = caption;
+        }
     } else {
         imageCaption?.remove();
     }
@@ -234,6 +250,7 @@ async function displayArticle(record) {
     document.body.replaceChildren(
         ...Array.from(templateDocument.body.childNodes, node => document.importNode(node, true))
     );
+    window.scrollTo(0, 0);
 }
 
 function displayFeatured(sectionId, record, description) {
@@ -324,6 +341,7 @@ async function initializeArchive() {
     const requestedId = new URLSearchParams(window.location.search).get("id");
 
     if (requestedId) {
+        window.history.scrollRestoration = "manual";
         const record = archive.find(article => article.id === requestedId);
         if (!record) {
             throw new Error(`Article ID "${requestedId}" was not found in ${archiveUrl}.`);
