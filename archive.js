@@ -3,6 +3,14 @@ const featuredUrl = "articles/featureddb.txt";
 const worksUrl = "articles/worksdb.txt";
 const imageCaptionsUrl = "articles/imgcaptions.txt";
 
+document.documentElement.style.setProperty("--stable-vh", `${window.innerHeight / 100}px`);
+
+function archiveImageUrl(image) {
+    return !image || image.toLowerCase() === "na"
+        ? "styles/images/placeholder.png"
+        : `styles/images/${image}`;
+}
+
 async function loadTextFile(url) {
     const response = await fetch(url, { cache: "no-store" });
 
@@ -148,6 +156,71 @@ async function loadOptionalArticle(id) {
     return response.text();
 }
 
+function appendFormattedText(parent, text, templateDocument) {
+    const markers = ["***", "~~", "**", "*"];
+    let remaining = text;
+
+    while (remaining) {
+        let markerIndex = -1;
+        let marker;
+        for (const candidate of markers) {
+            const index = remaining.indexOf(candidate);
+            if (index !== -1 && (markerIndex === -1 || index < markerIndex)) {
+                markerIndex = index;
+                marker = candidate;
+            }
+        }
+
+        if (markerIndex === -1 || !marker) {
+            appendTextWithBreaks(parent, remaining, templateDocument);
+            break;
+        }
+
+        appendTextWithBreaks(parent, remaining.slice(0, markerIndex), templateDocument);
+        const contentStart = markerIndex + marker.length;
+        const closingIndex = remaining.indexOf(marker, contentStart);
+        if (closingIndex === -1) {
+            appendTextWithBreaks(parent, remaining.slice(markerIndex, contentStart), templateDocument);
+            remaining = remaining.slice(contentStart);
+            continue;
+        }
+
+        const content = remaining.slice(contentStart, closingIndex);
+        let formatted;
+        let contentParent;
+        if (marker === "~~") {
+            formatted = templateDocument.createElement("span");
+            formatted.style.fontSize = "1.15em";
+            contentParent = formatted;
+        } else if (marker === "*") {
+            formatted = templateDocument.createElement("em");
+            contentParent = formatted;
+        } else if (marker === "**") {
+            formatted = templateDocument.createElement("strong");
+            contentParent = formatted;
+        } else {
+            formatted = templateDocument.createElement("strong");
+            contentParent = templateDocument.createElement("em");
+            formatted.append(contentParent);
+        }
+
+        appendFormattedText(contentParent, content, templateDocument);
+        parent.append(formatted);
+        remaining = remaining.slice(closingIndex + marker.length);
+    }
+}
+
+function appendTextWithBreaks(parent, text, templateDocument) {
+    text.split(/\r?\n/).forEach((line, index) => {
+        if (index > 0) {
+            parent.append(templateDocument.createElement("br"));
+        }
+        if (line) {
+            parent.append(templateDocument.createTextNode(line));
+        }
+    });
+}
+
 async function displayArticle(record) {
     const templateUrl = record.type === "self" ? "self-template.html" : "published-template.html";
     const [templateText, articleText, captionsText] = await Promise.all([
@@ -170,7 +243,7 @@ async function displayArticle(record) {
     const imageContainer = templateDocument.querySelector("#article-image");
     const articleDate = templateDocument.querySelector("#article-date");
 
-    if (!articleHeader || !imageContainer || !articleDate) {
+    if (!articleHeader || !articleDate) {
         throw new Error(`Article template ${templateUrl} is missing required article fields.`);
     }
 
@@ -179,33 +252,43 @@ async function displayArticle(record) {
         articleTitle.textContent = record.title;
     }
     articleDate.textContent = record.date;
-    const image = templateDocument.createElement("img");
-    image.src = `styles/images/${record.image}`;
-    image.alt = record.title;
-    imageContainer.replaceChildren(image);
 
     const imageCaption = templateDocument.querySelector("#image-caption");
-    const caption = parseImageCaptions(captionsText).get(record.image);
-    if (imageCaption && caption) {
-        const markedLine = caption.match(/<([^<>]+)>/);
-        if (markedLine && markedLine.index !== undefined) {
-            const beforeMarker = caption.slice(0, markedLine.index).trim();
-            const afterMarker = caption.slice(markedLine.index + markedLine[0].length).trim();
-            const attribution = templateDocument.createElement("span");
-            attribution.className = "image-caption-attribution";
-            attribution.style.setProperty("display", "block", "important");
-            attribution.textContent = markedLine[1].trim();
-
-            imageCaption.replaceChildren(
-                templateDocument.createTextNode(beforeMarker),
-                attribution,
-                ...(afterMarker ? [templateDocument.createTextNode(` ${afterMarker}`)] : [])
-            );
-        } else {
-            imageCaption.textContent = caption;
-        }
-    } else {
+    if (!record.image || record.image.toLowerCase() === "na") {
+        imageContainer?.remove();
         imageCaption?.remove();
+    } else {
+        if (!imageContainer) {
+            throw new Error(`Article template ${templateUrl} is missing #article-image.`);
+        }
+
+        const image = templateDocument.createElement("img");
+        image.src = `styles/images/${record.image}`;
+        image.alt = record.title;
+        imageContainer.replaceChildren(image);
+
+        const caption = parseImageCaptions(captionsText).get(record.image);
+        if (imageCaption && caption) {
+            const markedLine = caption.match(/<([^<>]+)>/);
+            if (markedLine && markedLine.index !== undefined) {
+                const beforeMarker = caption.slice(0, markedLine.index).trim();
+                const afterMarker = caption.slice(markedLine.index + markedLine[0].length).trim();
+                const attribution = templateDocument.createElement("span");
+                attribution.className = "image-caption-attribution";
+                attribution.style.setProperty("display", "block", "important");
+                attribution.textContent = markedLine[1].trim();
+
+                imageCaption.replaceChildren(
+                    templateDocument.createTextNode(beforeMarker),
+                    attribution,
+                    ...(afterMarker ? [templateDocument.createTextNode(` ${afterMarker}`)] : [])
+                );
+            } else {
+                imageCaption.textContent = caption;
+            }
+        } else {
+            imageCaption?.remove();
+        }
     }
 
     const articleContent = templateDocument.querySelector("#article-content");
@@ -218,7 +301,7 @@ async function displayArticle(record) {
     if (articleContent && paragraphs.length) {
         articleContent.replaceChildren(...paragraphs.map(paragraph => {
             const element = templateDocument.createElement("p");
-            element.textContent = paragraph;
+            appendFormattedText(element, paragraph, templateDocument);
             return element;
         }));
     } else {
@@ -250,6 +333,21 @@ async function displayArticle(record) {
     document.body.replaceChildren(
         ...Array.from(templateDocument.body.childNodes, node => document.importNode(node, true))
     );
+    const articleImage = document.querySelector("#article-image img");
+    if (articleImage) {
+        const applyArticleImageRatio = () => {
+            if (
+                articleImage.naturalHeight > 0 &&
+                Math.abs(articleImage.naturalWidth / articleImage.naturalHeight - 4 / 3) < 0.01
+            ) {
+                articleImage.classList.add("article-image-wide");
+            }
+        };
+        articleImage.addEventListener("load", applyArticleImageRatio, { once: true });
+        if (articleImage.complete && articleImage.naturalWidth > 0) {
+            applyArticleImageRatio();
+        }
+    }
     window.scrollTo(0, 0);
 }
 
@@ -266,7 +364,7 @@ function displayFeatured(sectionId, record, description) {
     }
 
     const image = document.createElement("img");
-    image.src = `styles/images/${record.image}`;
+    image.src = archiveImageUrl(record.image);
     image.alt = record.title;
     imageContainer.replaceChildren(image);
     makeNavigable(imageContainer, articlePageUrl(record.id));
@@ -315,7 +413,7 @@ function displayWorks(works, recordsById) {
         card.className = "shadow-dreamy worksworks";
 
         const image = document.createElement("img");
-        image.src = `styles/images/${record.image}`;
+        image.src = archiveImageUrl(record.image);
         image.alt = record.title;
         image.className = "works-image";
 

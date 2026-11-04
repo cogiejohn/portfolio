@@ -93,7 +93,7 @@
     font-family: 'Aston', sans-serif;
 }
 #welcome h1 {
-    font-size: min(6cqi, 3rem);
+    font-size: min(3rem, clamp(2cqi, calc(36px - 4cqi), 6cqi));
     white-space: nowrap;
 }
 
