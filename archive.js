@@ -238,6 +238,17 @@ async function displayArticle(record) {
             document.head.append(document.importNode(stylesheet, true));
         }
     });
+    templateDocument.querySelectorAll('link[rel="icon"][href]').forEach(icon => {
+        const iconLink = document.createElement("link");
+        iconLink.rel = "icon";
+        iconLink.href = new URL(icon.getAttribute("href"), window.location.href).href;
+        if (icon.type) {
+            iconLink.type = icon.type;
+        }
+
+        document.head.querySelectorAll('link[rel~="icon"]').forEach(existingIcon => existingIcon.remove());
+        document.head.append(iconLink);
+    });
     const articleHeader = templateDocument.querySelector("#article-header");
     const articleTitle = templateDocument.querySelector("#article-title");
     const imageContainer = templateDocument.querySelector("#article-image");

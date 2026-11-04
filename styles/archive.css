@@ -288,7 +288,7 @@
     object-fit: cover;
     object-position: center;
     border-radius: 5px;
-    margin: 0 0 .5vh;
+    margin: 0 0 1.25vh;
 }
 .works-title {
     font-size: clamp(1rem, 2.2vh, 1.5rem);
