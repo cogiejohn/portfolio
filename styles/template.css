@@ -23,7 +23,7 @@
 }
 #article-image {
     display: flex;
-    container-type: inline-size;
+    height: auto;
     padding: calc(var(--stable-vh) * 2) var(--article-inset) 0 var(--article-inset);
     margin: 0px 0px 0px 0px;
 }
@@ -32,12 +32,6 @@
     height: auto;
     border-radius: 5px;
     margin: 0px 0px 10px 0px;
-}
-#article-image img.article-image-wide {
-    aspect-ratio: 16 / 9;
-    height: calc(100cqw * 9 / 16);
-    object-fit: cover;
-    object-position: center;
 }
 #image-caption {
     box-sizing: border-box;

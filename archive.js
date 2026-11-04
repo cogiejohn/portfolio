@@ -333,21 +333,6 @@ async function displayArticle(record) {
     document.body.replaceChildren(
         ...Array.from(templateDocument.body.childNodes, node => document.importNode(node, true))
     );
-    const articleImage = document.querySelector("#article-image img");
-    if (articleImage) {
-        const applyArticleImageRatio = () => {
-            if (
-                articleImage.naturalHeight > 0 &&
-                Math.abs(articleImage.naturalWidth / articleImage.naturalHeight - 4 / 3) < 0.01
-            ) {
-                articleImage.classList.add("article-image-wide");
-            }
-        };
-        articleImage.addEventListener("load", applyArticleImageRatio, { once: true });
-        if (articleImage.complete && articleImage.naturalWidth > 0) {
-            applyArticleImageRatio();
-        }
-    }
     window.scrollTo(0, 0);
 }
 
@@ -377,7 +362,7 @@ function displayFeatured(sectionId, record, description) {
     }
 
     title.textContent = record.title;
-    date.textContent = record.date;
+    date.textContent = `${record.header} | ${record.date}`;
     makeNavigable(title, articlePageUrl(record.id));
     makeNavigable(date, articlePageUrl(record.id));
 
@@ -417,19 +402,15 @@ function displayWorks(works, recordsById) {
         image.alt = record.title;
         image.className = "works-image";
 
-        const type = document.createElement("p");
-        type.className = "works-header";
-        type.textContent = record.header;
-
         const title = document.createElement("h3");
         title.className = "works-title";
         title.textContent = record.title;
 
         const date = document.createElement("p");
         date.className = "works-date";
-        date.textContent = record.date;
+        date.textContent = `${record.header} | ${record.date}`;
 
-        card.append(image, type, title, date);
+        card.append(image, title, date);
         makeNavigable(card, articlePageUrl(record.id));
         return card;
     });

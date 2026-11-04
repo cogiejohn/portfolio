@@ -301,11 +301,6 @@
     font-family: 'Helvetica', serif;
     margin: 1vh 0 0 0;
 }
-.works-header {
-    font-size: clamp(0.75rem, 1.5vh, 1rem);
-    font-family: 'Garamond', serif;
-    margin: 0;
-}
 .works-date {
     font-style: italic;
 }
