@@ -288,17 +288,26 @@
     object-fit: cover;
     object-position: center;
     border-radius: 5px;
+    margin: 0 0 .5vh;
 }
 .works-title {
     font-size: clamp(1rem, 2.2vh, 1.5rem);
     font-family: 'Helvetica', sans-serif;
-    margin: 1vh 0;
+    margin: 0 0 1vh;
 }
+
 .works-date {
     font-size: clamp(0.75rem, 1.5vh, 1rem);
     font-family: 'Helvetica', serif;
-    font-style: italic;
+    margin: 1vh 0 0 0;
+}
+.works-header {
+    font-size: clamp(0.75rem, 1.5vh, 1rem);
+    font-family: 'Garamond', serif;
     margin: 0;
+}
+.works-date {
+    font-style: italic;
 }
 [data-article-url] {
     cursor: pointer;

@@ -417,6 +417,10 @@ function displayWorks(works, recordsById) {
         image.alt = record.title;
         image.className = "works-image";
 
+        const type = document.createElement("p");
+        type.className = "works-header";
+        type.textContent = record.header;
+
         const title = document.createElement("h3");
         title.className = "works-title";
         title.textContent = record.title;
@@ -425,7 +429,7 @@ function displayWorks(works, recordsById) {
         date.className = "works-date";
         date.textContent = record.date;
 
-        card.append(image, title, date);
+        card.append(image, type, title, date);
         makeNavigable(card, articlePageUrl(record.id));
         return card;
     });
